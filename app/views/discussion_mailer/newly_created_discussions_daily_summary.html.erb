@@ -1,0 +1,14 @@
+<p>Hello <%= @project.user.full_name %></p>
+
+<p>Your daily summary list of newly created discussions:</p>
+
+<p>For project: <%= @project.title %></p>
+==============
+
+<% @daily_discussions.each do |d| %>
+ - discussion: <%= d.title %>, created by user: <%= d.user.full_name %>
+<% end %>
+
+<p>Regards,</p>
+
+<p>Pm tool web team</p>

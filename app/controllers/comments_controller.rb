@@ -11,15 +11,17 @@ class CommentsController < ApplicationController
 			if @comment.save
 
 				if @comment.user != @discussion.user
-					# delayed email job
-		      DiscussionMailer.notify_discussion_owner(@comment, current_user).deliver_later
+
+					# background email job, use deliver_later
+#DEPRECATION WARNING: `#deliver` is deprecated and will be removed in Rails 5. Use `#deliver_now` to deliver immediately or `#deliver_later` to deliver through Active Job.					
+		      DiscussionMailer.notify_discussion_owner(@comment, current_user).deliver_now
 		    end
 		    
 				format.js { render } #render /comments/create.js.erb
-				format.html { 			redirect_to project_path(@discussion.project), notice: "Comment created successfully" }
+				format.html { redirect_to project_path(@discussion.project), notice: "Comment created successfully" }
 			else
 				format.js { render } #render /comments/create.js.erb
-				format.html { 			redirect_to project_path(@discussion.project), alert: "err: Comment didn't save!" }
+				format.html { redirect_to project_path(@discussion.project), alert: "err: Comment didn't save!" }
 			end
 		end
 	end

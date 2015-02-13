@@ -15,8 +15,6 @@ class TasksController < ApplicationController
 		respond_to do |format|
 			
 			if @task.save
-				TaskMailer.notify_task_owner(@task, current_user).deliver_later
-
 				format.js { render } #render "/tasks/create.js.erb"
 				format.html { redirect_to project_path(@project),  notice: "Task created successfully." }
 			else
@@ -39,7 +37,9 @@ class TasksController < ApplicationController
 		respond_to do |format|
 			if @task.update task_params
 				if (current_user != @task.user) && (old_status == false) && (@task.status == true)
-					TaskMailer.notify_task_owner(@task, current_user).deliver
+
+#DEPRECATION WARNING: `#deliver` is deprecated and will be removed in Rails 5. Use `#deliver_now` to deliver immediately or `#deliver_later` to deliver through Active Job.					
+					TaskMailer.notify_task_owner(@task, current_user).deliver_now
 				end
 
 				format.js { render } #render "/tasks/update.js.erb"

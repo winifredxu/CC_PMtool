@@ -1,0 +1,14 @@
+Hello <%= @project.user.first_name %> 
+
+Your daily summary list of newly created tasks: 
+
+For project: <%= @project.title %>, daily task summary list below:
+===============
+
+<% @daily_tasks.each do |t| %>
+ - task: <%= t.title %>, created by: <%= t.user.full_name %>
+<% end %>
+
+Regards,
+
+Pm tool web team
