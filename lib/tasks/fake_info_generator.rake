@@ -20,7 +20,7 @@ namespace :fake_info_generator do
         end
 
         5.times do 
-          project.tasks.create(title: Faker::Company.bs, body: Faker::Lorem.sentence(2), due_date: Faker::Date.forward(30), user_id: ids.sample.id )
+          project.tasks.create(title: Faker::Company.bs, body: Faker::Lorem.sentence(2), due_date: Faker::Date.forward(30), status: [false, true].sample, user_id: ids.sample.id )
         end
       end
     end
